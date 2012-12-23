@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="giant.display.core.GiantSprite"/>
+    <classEntry path="giant.display.core.LayoutManager"/>
+    <classEntry path="giant.display.core.Giant"/>
+    <classEntry path="giant.display.core.UIComponentGlobals"/>
+    <classEntry path="giant.display.core.ILayoutManager"/>
+    <classEntry path="giant.display.core.UIComponent"/>
+    <classEntry path="giant.display.core.inter.IUIComponent"/>
+    <classEntry path="giant.display.core.inter.ILayoutManager"/>
+    <classEntry path="giant.display.core.UIComponentGlobal"/>
+    <classEntry path="giant.display.core.inter.ILayoutManagerClient"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
