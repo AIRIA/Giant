@@ -11,6 +11,8 @@
     <classEntry path="giant.display.core.inter.ILayoutManager"/>
     <classEntry path="giant.display.core.UIComponentGlobal"/>
     <classEntry path="giant.display.core.inter.ILayoutManagerClient"/>
+    <classEntry path="giant.display.core.PriorityQueue"/>
+    <classEntry path="giant.display.controls.Image"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

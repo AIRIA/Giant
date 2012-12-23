@@ -1,7 +1,6 @@
 package giant.display.core
 {
 	import flash.display.DisplayObject;
-	import flash.display3D.IndexBuffer3D;
 	
 	import giant.display.core.inter.ILayoutManagerClient;
 	import giant.display.core.inter.IUIComponent;
@@ -19,7 +18,7 @@ package giant.display.core
 	 * 子类组件需要覆盖的是 commitProperties measureSize updateDisplayList方法 
 	 * </p>
 	 * 
-	 * @author AIRIA email:chaibingcheng0305@163.com
+	 * @author AIRIA email:chaibingcheng0305#163.com
 	 * @date 2012-12-20
 	 *
 	 */
@@ -31,6 +30,9 @@ package giant.display.core
 		private var _measureWidth:Number;
 		private var _measureHeight:Number;
 		private var _owner:IUIComponent;
+		private var _width:Number = 0;
+		private var _height:Number = 0;
+		
 		/* 以下定义的变量用来供逻辑方法使用  */
 		private var invalidatePropertiesFlag:Boolean = false;
 		private var invalidateSizeFlag:Boolean = false;
@@ -165,11 +167,36 @@ package giant.display.core
 			}
 		}
 		
+		override public function set width(value:Number):void
+		{
+			if(_width!=value){
+				_width = value;
+				_explicitWidth = value;
+			}
+		}
+		
+		override public function get width():Number
+		{
+			return _width;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			if(_height!=value){
+				_height = value;
+				_explicitHeight = value;
+			}
+		}
+		
+		override public function get height():Number
+		{
+			return _height;
+		}
+		
 		public function get nestLevel():Number
 		{
 			return _nestLevel;
 		}
-		
 		
 		public function set explicitHeight(value:Number):void
 		{
