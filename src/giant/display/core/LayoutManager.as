@@ -8,7 +8,7 @@ package giant.display.core
 	
 	/**
 	 * LayoutManager负责UIComponent的生效方法调用
-	 * @author AIRIA email:chaibingcheng0305@163.com
+	 * @author AIRIA email:chaibingcheng0305#163.com
 	 * @date 2012-12-20
 	 *
 	 */
@@ -16,9 +16,9 @@ package giant.display.core
 	{
 		private static var instance:LayoutManager;
 		/* 等待验证的组件的队列 */
-		private var validatePropertiesQueue:Array = [];
-		private var validateSizeQueue:Array = [];
-		private var validateDisplayListQueue:Array = [];
+		private var validatePropertiesQueue:PriorityQueue = new PriorityQueue();
+		private var validateSizeQueue:PriorityQueue = new PriorityQueue();
+		private var validateDisplayListQueue:PriorityQueue = new PriorityQueue();
 		private var listenerAttached:Boolean = false;
 		
 //		private var invalidateProperteisFlag:Boolean = false;
@@ -45,7 +45,7 @@ package giant.display.core
 		
 		public function invalidateProperties(ui:IUIComponent):void
 		{
-			validatePropertiesQueue.push(ui);
+			validatePropertiesQueue.addElement(ui);
 			if(!listenerAttached){
 				attachListener();
 				listenerAttached = true;
@@ -54,7 +54,7 @@ package giant.display.core
 		
 		public function invalidateSize(ui:IUIComponent):void
 		{
-			validateSizeQueue.push(ui);
+			validateSizeQueue.addElement(ui);
 			if(!listenerAttached){
 				attachListener();
 				listenerAttached = true;
@@ -63,7 +63,7 @@ package giant.display.core
 		
 		public function invalidateDisplayList(ui:IUIComponent):void
 		{
-			validateDisplayListQueue.push(ui);
+			validateDisplayListQueue.addElement(ui);
 			if(!listenerAttached){
 				attachListener();
 				listenerAttached = true;
@@ -85,17 +85,17 @@ package giant.display.core
 		public function renderHandler(event:Event):void
 		{
 			Giant.stage.removeEventListener(Event.RENDER,renderHandler);
+			validatePropertiesQueue.sortElement();
 			while(validatePropertiesQueue.length){
-				ILayoutManagerClient(validatePropertiesQueue[0]).validateProperties();
-				validatePropertiesQueue.shift();
+				validatePropertiesQueue.removeSmallest().validateProperties();
 			}
+			validateSizeQueue.sortElement();
 			while(validateSizeQueue.length){
-				ILayoutManagerClient(validateSizeQueue[validateSizeQueue.length-1]).validateSize();
-				validateSizeQueue.pop();
+				validateSizeQueue.removeLargest().validateSize();
 			}
+			validateDisplayListQueue.sortElement();
 			while(validateDisplayListQueue.length){
-				ILayoutManagerClient(validateDisplayListQueue[0]).validateDisplayList();
-				validateDisplayListQueue.shift();
+				validateDisplayListQueue.removeSmallest().validateDisplayList();
 			}
 			listenerAttached = false;
 		}
