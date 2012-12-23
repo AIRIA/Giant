@@ -48,5 +48,11 @@ package giant.display.core.inter
 		 */
 		function get owner():IUIComponent;
 		
+		/**
+		 * 显示对象以舞台为基准 的层级关系 如果是0的话 意味着还没有添加到舞台上
+		 */
+		function set nestLevel(value:Number):void;
+		function get nestLevel():Number;
+		
 	}
 }

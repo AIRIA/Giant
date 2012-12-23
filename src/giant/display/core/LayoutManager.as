@@ -80,6 +80,7 @@ package giant.display.core
 		}
 		/**
 		 * 渲染的逻辑
+		 * <p>首先将提交阶段的全部方法执行完毕 然后开始执行 测量 最后执行布局的逻辑</p>
 		 */
 		public function renderHandler(event:Event):void
 		{

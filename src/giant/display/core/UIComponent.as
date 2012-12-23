@@ -1,20 +1,29 @@
 package giant.display.core
 {
 	import flash.display.DisplayObject;
-	import flash.display.Sprite;
+	import flash.display3D.IndexBuffer3D;
 	
 	import giant.display.core.inter.ILayoutManagerClient;
 	import giant.display.core.inter.IUIComponent;
+	import giant.utils.GiantSprite;
 	
 	/**
 	 * Giant库中一切显示对象的基础组件 继承了Sprit 并扩展了Sprite 
 	 * 添加了 属性校验  度量 布局 三阶段的 invalidate-validate的验证模式
 	 * 避免了重复计算的弊端 有效提高计算效率
+	 * 
+	 * <p>
+	 * 在子类的组件中并没有直接覆盖 validateProperties validateSize validateDisplayList方法
+	 * validateProperties 调用了commiteProperties,validateSize调用了measureSize方法,
+	 * validateDisplayList调用了updateDisplayList方法.
+	 * 子类组件需要覆盖的是 commitProperties measureSize updateDisplayList方法 
+	 * </p>
+	 * 
 	 * @author AIRIA email:chaibingcheng0305@163.com
 	 * @date 2012-12-20
 	 *
 	 */
-	public class UIComponent extends Sprite implements IUIComponent,ILayoutManagerClient
+	public class UIComponent extends GiantSprite implements IUIComponent,ILayoutManagerClient
 	{
 		/* 以下定义的属性用来配合setter/getter方法 */
 		private var _explicitWidth:Number;
@@ -27,6 +36,7 @@ package giant.display.core
 		private var invalidateSizeFlag:Boolean = false;
 		private var invalidateDisplayListFlag:Boolean = false;
 		private var initialized:Boolean = false;
+		private var _nestLevel:Number = 0;
 		
 		public function UIComponent()
 		{
@@ -58,6 +68,7 @@ package giant.display.core
 					uiComp.initialize();
 					uiComp.initialized = true;
 				}
+				uiComp.nestLevel = nestLevel + 1;
 			}
 		}
 		/**
@@ -136,8 +147,29 @@ package giant.display.core
 		protected function updateDisplayList():void{
 			
 		}
-		
 //-------------getter/setter methods--------------------------------------------------	
+		public function set nestLevel(value:Number):void
+		{
+			if(_nestLevel!=value){
+				_nestLevel = value;
+				value++;
+				/**
+				 * 可以达到级联设置子级显示列表nestLevel的效果
+				 */
+				for(var i:int=0;i<numChildren;i++){
+					var ui:IUIComponent = IUIComponent(getChildAt(i));
+					if(ui){
+						ui.nestLevel = value;
+					}
+				}
+			}
+		}
+		
+		public function get nestLevel():Number
+		{
+			return _nestLevel;
+		}
+		
 		
 		public function set explicitHeight(value:Number):void
 		{
