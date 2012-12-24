@@ -1,6 +1,6 @@
 package giant.display.controls
 {
-	import flash.display.DisplayObject;
+	import flash.display.Bitmap;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -21,8 +21,15 @@ package giant.display.controls
 		private var _source:Object;
 		private var _loader:Loader;
 		private var _urlReq:URLRequest;
-		private var _autoLoad:Boolean = true;
-		public var content:DisplayObject;
+		/**
+		 * 是不是在设置了source属性后 直接加载图片
+		 * <p>只有在source属性代表远程图片URL的情况下 autoLoad属性才起作用 如果是bitmap的话 就涉及不到是不是要立即加载</p>
+		 */
+		public var autoLoad:Boolean = true;
+		/**
+		 * 
+		 */
+		public var content:Bitmap;
 		/**
 		 * 构造方法
 		 */
@@ -42,6 +49,13 @@ package giant.display.controls
 		public function set source(value:Object):void{
 			if(this._source!=value){
 				this._source = value;
+				if(value is Bitmap){
+					
+				}else if(value is String){
+					if(autoLoad){
+						load();
+					}
+				}
 			}
 		}
 		public function get source():Object{
@@ -62,14 +76,22 @@ package giant.display.controls
 			_urlReq.url = String(source);
 			_loader.load(_urlReq);
 		}
+		/**
+		 * 移除所有的侦听器
+		 */
+		public function dispose():void{
+			_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,loadCompHandler);
+			_loader.contentLoaderInfo.removeEventListener(IOErrorEvent.IO_ERROR,trace);
+			_loader.contentLoaderInfo.removeEventListener(ProgressEvent.PROGRESS,trace);
+		}
 		
 		public function loadCompHandler(event:Event):void
 		{
-			trace("偶看");
+			dispose();
 			if(content&&contains(content)){
 				removeChild(content);
 			}
-			content = _loader.content;
+			content = Bitmap(_loader.content);
 			measureWidth = content.width;
 			measureHeight = content.height;
 			content.width = explicitWidth;

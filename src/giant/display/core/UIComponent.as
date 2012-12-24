@@ -4,7 +4,7 @@ package giant.display.core
 	
 	import giant.display.core.inter.ILayoutManagerClient;
 	import giant.display.core.inter.IUIComponent;
-	import giant.utils.GiantSprite;
+	import giant.display.manager.StyleManager;
 	
 	/**
 	 * Giant库中一切显示对象的基础组件 继承了Sprit 并扩展了Sprite 
@@ -32,13 +32,15 @@ package giant.display.core
 		private var _owner:IUIComponent;
 		private var _width:Number = 0;
 		private var _height:Number = 0;
+		private var _nestLevel:Number = 0;
+		private var _style:StyleManager;
 		
 		/* 以下定义的变量用来供逻辑方法使用  */
 		private var invalidatePropertiesFlag:Boolean = false;
 		private var invalidateSizeFlag:Boolean = false;
 		private var invalidateDisplayListFlag:Boolean = false;
 		private var initialized:Boolean = false;
-		private var _nestLevel:Number = 0;
+		
 		
 		public function UIComponent()
 		{
@@ -150,6 +152,25 @@ package giant.display.core
 			
 		}
 //-------------getter/setter methods--------------------------------------------------	
+		
+		public function get style():StyleManager
+		{
+			return _style;
+		}
+		
+		/**
+		 * 该类继承哪些 CSS 样式属性 
+		 * 哪些样式属性是颜色，因此获得特殊处理 
+		 * 一组用作颜色值别名的字符串 
+		 */
+		public function set style(value:StyleManager):void
+		{
+			if(_style!=value){
+				_style = value;
+				style.hostComponent = this;
+			}
+		}
+		
 		public function set nestLevel(value:Number):void
 		{
 			if(_nestLevel!=value){
@@ -159,7 +180,7 @@ package giant.display.core
 				 * 可以达到级联设置子级显示列表nestLevel的效果
 				 */
 				for(var i:int=0;i<numChildren;i++){
-					var ui:IUIComponent = IUIComponent(getChildAt(i));
+					var ui:IUIComponent = getChildAt(i) as IUIComponent;
 					if(ui){
 						ui.nestLevel = value;
 					}

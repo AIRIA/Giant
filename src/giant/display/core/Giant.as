@@ -1,6 +1,8 @@
 package giant.display.core
 {
 	import flash.display.Stage;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 
 	/**
 	 * Giant类主要负责获取关于stage的信息
@@ -14,6 +16,8 @@ package giant.display.core
 		public function Giant(stage:Stage)
 		{
 			Giant.stage = stage;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
 		}
 	}
 }

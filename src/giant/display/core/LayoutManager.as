@@ -3,7 +3,6 @@ package giant.display.core
 	import flash.events.Event;
 	
 	import giant.display.core.inter.ILayoutManager;
-	import giant.display.core.inter.ILayoutManagerClient;
 	import giant.display.core.inter.IUIComponent;
 	
 	/**

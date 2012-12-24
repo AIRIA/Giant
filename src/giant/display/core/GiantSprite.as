@@ -1,4 +1,4 @@
-package giant.utils
+package giant.display.core
 {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
