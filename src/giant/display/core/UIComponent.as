@@ -121,7 +121,11 @@ package giant.display.core
 		
 		public function validateProperties():void{
 			trace(this.name,"validateProperties");
-			commitProperties();
+			if(invalidatePropertiesFlag){
+				commitProperties();
+				invalidatePropertiesFlag = false;
+			}
+			
 		}
 		/**
 		 * 子类中重写此方法 来实现属性的提交  之所以不直接重写validateProperties 可以在实现的更高级别来有效的扩展其他的功能
@@ -132,7 +136,11 @@ package giant.display.core
 		
 		public function validateSize():void{
 			trace(this.name,"validateSize");
-			measureSize();
+			if(invalidateSizeFlag){
+				measureSize();
+				invalidateSizeFlag = false;
+			}
+			
 		}
 		/**
 		 * 子类来重写此方法来 实现度量的逻辑
@@ -143,7 +151,10 @@ package giant.display.core
 		
 		public function validateDisplayList():void{
 			trace(this.name,"validateDisplayList");
-			updateDisplayList();
+			if(invalidateDisplayListFlag){
+				updateDisplayList();
+				invalidateDisplayListFlag = false;
+			}
 		}
 		/**
 		 * 重写此方法来实现显示列表的重新定位和布局操作
@@ -167,7 +178,8 @@ package giant.display.core
 		{
 			if(_style!=value){
 				_style = value;
-				style.hostComponent = this;
+				style.hostComponents.addUniqueElement(this);
+				style.initStyle();
 			}
 		}
 		
