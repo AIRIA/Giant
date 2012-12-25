@@ -13,7 +13,7 @@ package giant.display.controls
 	public class Label extends UIComponent
 	{
 
-		private var _textField:TextField;
+		public var _textField:TextField;
 		private var _text:String;
 		private var _selectable:Boolean=false;
 		private var _textWidth:Number = 0;
@@ -25,12 +25,13 @@ package giant.display.controls
 		public function Label()
 		{
 			super();
+			_textField=new TextField();
+			addChild(_textField);
 		}
 
 		override protected function createChildren():void
 		{
-			_textField=new TextField();
-			addChild(_textField);
+			
 		}
 
 		override protected function commitProperties():void
@@ -41,6 +42,7 @@ package giant.display.controls
 
 
 //-----------------setter/getter methods-----------------------------------------------
+		
 		public function get text():String
 		{
 			return _text;
