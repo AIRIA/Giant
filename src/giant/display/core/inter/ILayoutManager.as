@@ -4,7 +4,7 @@ package giant.display.core.inter
 	 * 
 	 * @author AIRIA email:chaibingcheng0305@163.com
 	 * @date 2012-12-20
-	 *
+	 * @see giant.display.core.LayoutManager
 	 */
 	public interface ILayoutManager
 	{
