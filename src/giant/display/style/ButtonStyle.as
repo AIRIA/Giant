@@ -5,7 +5,6 @@ package giant.display.style
 	
 	import giant.display.controls.Button;
 	import giant.display.controls.Image;
-	import giant.display.controls.Label;
 	import giant.display.manager.StyleManager;
 	
 	/**
@@ -183,8 +182,7 @@ package giant.display.style
 		
 		override public function initStyle():void
 		{
-			_button = hostComponents[0];
-			_button.addChildAt(upSkin,0);
+			_button = hostComponents.lastElement() as Button;
 			_button.textLabel.textField.defaultTextFormat = _textFormat;
 		}
 		/**

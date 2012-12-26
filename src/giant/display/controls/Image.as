@@ -33,7 +33,7 @@ package giant.display.controls
 		/**
 		 * 构造方法
 		 */
-		public function Image(source:Object,width:Number=NaN,height:Number=NaN)
+		public function Image(source:Object=null,width:Number=NaN,height:Number=NaN)
 		{
 			super();
 			this.source = source;

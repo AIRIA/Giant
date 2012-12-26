@@ -19,7 +19,7 @@ package giant.display.controls
 		private var _textLabel:Label;
 		private var _iconPlacement:String = "left";
 		private var _phase:String;
-		private var tempSkin:UIComponent;
+		private var _tempSkin:Image;
 		/**
 		 * 构造方法
 		 */
@@ -104,11 +104,11 @@ package giant.display.controls
 				removeChild(tempSkin);
 			}
 			if(phase==ButtonPhase.UP){
-				tempSkin = buttonStyle.upSkin;
+				tempSkin.source = buttonStyle.upSkin.source;
 			}else if(phase==ButtonPhase.OVER){
-				tempSkin = buttonStyle.overSkin;
+				tempSkin.source = buttonStyle.overSkin.source;
 			}else if(phase==ButtonPhase.DOWN){
-				tempSkin = buttonStyle.downSkin;
+				tempSkin.source = buttonStyle.downSkin.source;
 			}
 			if(tempSkin){
 				tempSkin.width = explicitWidth;
@@ -120,7 +120,16 @@ package giant.display.controls
 		
 		
 //---------------setter/getter methods------------------------------
+		public function get tempSkin():Image{
+			if(!_tempSkin){
+				_tempSkin = new Image();
+			}
+			return _tempSkin;
+		}
 		
+		/**
+		 * @private
+		 */
 		private function get buttonStyle():ButtonStyle
 		{
 			ButtonStyle(style);
