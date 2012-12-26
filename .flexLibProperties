@@ -13,6 +13,13 @@
     <classEntry path="giant.display.core.inter.ILayoutManagerClient"/>
     <classEntry path="giant.display.core.PriorityQueue"/>
     <classEntry path="giant.display.controls.Image"/>
+    <classEntry path="giant.display.controls.Label"/>
+    <classEntry path="giant.display.style.LabelStyle"/>
+    <classEntry path="giant.display.manager.StyleManager"/>
+    <classEntry path="giant.util.GiantArray"/>
+    <classEntry path="giant.display.controls.Button"/>
+    <classEntry path="giant.display.style.ButtonStyle"/>
+    <classEntry path="giant.display.controls.ButtonPhase"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

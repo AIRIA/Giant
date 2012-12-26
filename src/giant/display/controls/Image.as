@@ -33,13 +33,16 @@ package giant.display.controls
 		/**
 		 * 构造方法
 		 */
-		public function Image(source:Object,width:Number,height:Number)
+		public function Image(source:Object,width:Number=NaN,height:Number=NaN)
 		{
 			super();
 			this.source = source;
-			this.width = width;
-			this.height = height;
-			
+			if(!isNaN(width)){
+				this.width = width;
+			}
+			if(!isNaN(height)){
+				this.height = height;
+			}
 		}
 		
 		
@@ -99,5 +102,22 @@ package giant.display.controls
 			addChild(content);
 		}		
 		
+		override public function set width(value:Number):void
+		{
+			super.width = value;
+			if(content){
+				content.width = value;
+			}
+			
+		}
+		
+		override public function set height(value:Number):void
+		{
+			super.height = value;
+			if(content){
+				content.height = value;
+			}
+			
+		}
 	}
 }

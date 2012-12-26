@@ -1,6 +1,7 @@
 package giant.display.controls
 {
 	import flash.text.TextField;
+	import flash.text.TextFieldAutoSize;
 	
 	import giant.display.core.UIComponent;
 
@@ -13,7 +14,7 @@ package giant.display.controls
 	public class Label extends UIComponent
 	{
 
-		public var _textField:TextField;
+		private var _textField:TextField;
 		private var _text:String;
 		private var _selectable:Boolean=false;
 		private var _textWidth:Number = 0;
@@ -26,6 +27,10 @@ package giant.display.controls
 		{
 			super();
 			_textField=new TextField();
+			_textField.autoSize = TextFieldAutoSize.LEFT;
+			_textField.wordWrap = true;
+			_textField.condenseWhite=true;
+			_textField.multiline = true;
 			addChild(_textField);
 		}
 
@@ -42,6 +47,25 @@ package giant.display.controls
 
 
 //-----------------setter/getter methods-----------------------------------------------
+		
+		override public function set width(value:Number):void
+		{
+			super.width = value;
+			textField.width = value;
+		}
+		
+		override public function set height(value:Number):void
+		{
+			super.height = value;
+			textField.height = value;
+		}
+		
+		/**
+		 * Label组件内部使用的TextField
+		 */
+		public function get textField():TextField{
+			return _textField;
+		}
 		
 		public function get text():String
 		{

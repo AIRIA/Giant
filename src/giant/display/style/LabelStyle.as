@@ -28,8 +28,8 @@ package giant.display.style
 		
 		private function applyStyle():void{
 			for(var i:int=0;i<hostComponents.length;i++){
-				Label(hostComponents[i])._textField.defaultTextFormat = _textFormat;
-				Label(hostComponents[i])._textField.text = Label(hostComponents[i])._textField.text;
+				Label(hostComponents[i]).textField.defaultTextFormat = _textFormat;
+				Label(hostComponents[i]).textField.text = Label(hostComponents[i]).textField.text;
 			}
 		}
 		
@@ -194,7 +194,7 @@ package giant.display.style
 		override public function initStyle():void
 		{
 			var label:Label = hostComponents.lastElement() as Label;
-			_textField = label._textField;
+			_textField = label.textField;
 			_textField.defaultTextFormat = _textFormat;
 		}
 		
