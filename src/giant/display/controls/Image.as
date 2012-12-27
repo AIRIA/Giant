@@ -1,6 +1,7 @@
 package giant.display.controls
 {
 	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -52,8 +53,11 @@ package giant.display.controls
 		public function set source(value:Object):void{
 			if(this._source!=value){
 				this._source = value;
-				if(value is Bitmap){
-					
+				if(value is BitmapData){
+					if(!content){
+						content = new Bitmap(BitmapData(value));
+					}
+					layoutContent(new Bitmap(BitmapData(value)));
 				}else if(value is String){
 					if(autoLoad){
 						load();
@@ -61,6 +65,7 @@ package giant.display.controls
 				}
 			}
 		}
+		
 		public function get source():Object{
 			return this._source;
 		}
@@ -91,16 +96,21 @@ package giant.display.controls
 		public function loadCompHandler(event:Event):void
 		{
 			dispose();
+			layoutContent(Bitmap(_loader.content));
+		}		
+		
+		private function layoutContent(bm:Bitmap):void
+		{
 			if(content&&contains(content)){
 				removeChild(content);
 			}
-			content = Bitmap(_loader.content);
+			content = bm;
 			measureWidth = content.width;
 			measureHeight = content.height;
 			content.width = explicitWidth;
 			content.height = explicitHeight;
 			addChild(content);
-		}		
+		}
 		
 		override public function set width(value:Number):void
 		{
@@ -108,7 +118,6 @@ package giant.display.controls
 			if(content){
 				content.width = value;
 			}
-			
 		}
 		
 		override public function set height(value:Number):void
