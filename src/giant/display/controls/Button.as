@@ -5,6 +5,7 @@ package giant.display.controls
 	
 	import giant.display.core.UIComponent;
 	import giant.display.style.ButtonStyle;
+	import giant.events.GiantEvent;
 
 	/**
 	 * Button 控件是常用的矩形按钮。Button 控件看起来似乎可以按压。控件表面可以包含文本标签和（或）图标。
@@ -86,7 +87,12 @@ package giant.display.controls
 		override protected function updateDisplayList():void
 		{
 			if(icon){
-				textLabel.width = explicitOrMeasureWidth - icon.width;
+				textLabel.width = explicitOrMeasureWidth - icon.explicitOrMeasureWidth;
+				if(contains(icon as UIComponent)){
+					var ico:UIComponent = UIComponent(icon);
+					icon.y = explicitHeight - ico.explicitOrMeasureHeight >> 1;
+				}
+				textLabel.x = ico.explicitOrMeasureWidth;
 			}else{
 				textLabel.width = explicitOrMeasureWidth;
 			}
@@ -160,10 +166,17 @@ package giant.display.controls
 		public function set icon(value:Object):void
 		{
 			if(!_icon){
-				icon = new Image(value); 
+				var self:Button = this;
+				_icon = new Image(); 
+				Image(_icon).addEventListener(GiantEvent.LOAD_COMPLETE,function(event:GiantEvent):void{
+					self.invalidateDisplayList();
+				});
+				_icon.source = value;
+				addChildAt(_icon,1);
 			}else{
 				_icon.source = value;
 			}
+			invalidateDisplayList();
 		}
 		
 		public function get icon():Object

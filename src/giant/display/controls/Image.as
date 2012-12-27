@@ -9,6 +9,7 @@ package giant.display.controls
 	import flash.net.URLRequest;
 	
 	import giant.display.core.UIComponent;
+	import giant.events.GiantEvent;
 	
 	/**
 	 * 显示图片的类
@@ -98,7 +99,9 @@ package giant.display.controls
 			dispose();
 			layoutContent(Bitmap(_loader.content));
 		}		
-		
+		/**
+		 * 对图片进行布局和尺寸调整哼 并抛出Complete事件
+		 */
 		private function layoutContent(bm:Bitmap):void
 		{
 			if(content&&contains(content)){
@@ -110,6 +113,7 @@ package giant.display.controls
 			content.width = explicitWidth;
 			content.height = explicitHeight;
 			addChild(content);
+			dispatchEvent(new GiantEvent(GiantEvent.LOAD_COMPLETE));
 		}
 		
 		override public function set width(value:Number):void
